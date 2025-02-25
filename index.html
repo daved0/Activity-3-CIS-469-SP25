@@ -4,78 +4,7 @@
   <meta charset="UTF-8">
   <title>Mac OS Calculator</title>
   <style>
-    #calculator {
-      /* Grid Layout is used to position the keys */
-      margin: auto;
-      width: 200px; /* Width of calculator */
-      height: 345px; /* Height of calculator */
-      background-color: #27282A; /* Background color of calculator */
-      border: solid 1px #5e5e5c; /* Border of calculator */
-      font-family: sans-serif; /* Font of calculator -- this is probably different from the actual calculator font */
-      font-size: 14pt; /* Font size of calculator */
-      color: floralwhite; /* Color of calculator text */
-      display: grid; /* Grid Layout is used to position the keys */
-      grid-template-columns: repeat(4, 1fr); /* 4 columns of equal width see the slides for the full explanation */
-      grid-auto-rows: 1fr; /* See slides for details  or mdn web docs  https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows */
-    }
-    /* Style for each key */
-    .key {
-        /* width and height of the keys are 40px */
-        width:37px;  
-        height:37px;
-        /* border of the keys */
-        border: solid #5e5e5c 1px;
-        /* make display of the key flex, so later we can center the text inside the keys */
-        display: flex;
-    
-        /* center the text inside the keys horizontally and vertically */
-        align-items: center;
-        justify-content: center;
-      
-        /* prevent user from highlighting the keys, this way they can't copy the text */
-        user-select: none;
-        /* the pointer is a hand, telling user you can click on the key */
-        cursor: pointer;
-      /* round the corners of the keys to make it round*/
-        border-radius:50px;
-        margin: 3px;
-    }
-.output {
-  position: relative; /* Added to position the span element */
-  height: 100px;
-  
-  text-align: right; /* Align text to the right */
-
-  grid-column: span 4;
-  padding: 10px;
-}
-.output span {
-  position: absolute;
-  bottom: 10px; /* Adjust to match padding if needed */
-  right: 10px;  /* Adjust to match padding if needed */
-}
-    .numberKeys {
-      background-color: #565758;
-    }
-    .topRowKeys {
-      background-color: #6d6d6b;
-    }
-    .operatorKeys {
-      background-color: #fb9c0e;
-    }
-    .numberKeysPressed {
-      background-color: #b6b6b5;
-    }
-    .topRowKeysPressed {
-      background-color: #858483;
-    }
-    .operatorKeysPressed {
-      background-color: #cb7d06;
-    }
-    /* Utility class for keys spanning 2 columns */
-    .span-2 {
-      grid-column: span 2;
-    }
+    @import url("style.css");
   </style>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
@@ -92,12 +21,22 @@
     <div class="key operatorKeys">/</div>
     
     <!-- Second Row -->
+    <div class="key sndRowKeys">7</div>
+    <div class="key sndRowKeys">8</div>
+    <div class="key sndRowKeys">9</div>
+    <div class="key operatorKeys">*</div>
     
     <!-- Third Row -->
-
-    <!-- Fourth Row -->
-
+    <div class="key trdRowKeys">4</div>
+    <div class="key trdRowKeys">5</div>
+    <div class="key trdRowKeys">6</div>
+    <div class="key operatorKeys">-</div>
     
+    <!-- Fourth Row -->
+    <div class="key fifRowKeys">1</div>
+    <div class="key fifRowKeys">2</div>
+    <div class="key fifRowKeys">3</div>
+    <div class="key operatorKeys">+</div>
     
     <!-- Fifth Row -->
     <div class="key numberKeys"><img srt="./assets/backspace.png" width="20px" height="20px"></div>
@@ -111,78 +50,6 @@
   I have used event delegation to handle the events.
   Meaning that I have added the event handler only to the calculator div, and not to the keys. 
   -->
-  <script>
-
-    // I have used $$ which is a shortcut for document.querySelector
-    // The reason $$ is used is to make the code more readable, and similar to jQuery
-    const $$ = (selector) => document.querySelector(selector);
-    const getCurrentOutput = () => $$('#output span').innerText;
-    const setCurrentOutput = (val) => $$('#output span').innerText = val;
-    // Variables to store the input key and the previous key
-    let inputKey = ""; // anytime the user clicks a key, the inputKey is updated
-    let previousKey = ""; // anytime the user clicks a key, the previousKey is updated
-    const operators = "/*-+"; // List of operators
-    const calculator = $$ ("#calculator"); // The calculator div
-    
-    // As mentioned in week 4 class, I have used event delegation to handle the events on calculator div
-    
-    calculator.addEventListener('click', (e) => { // now on every click on the calculator div is handled
-      // Here I check if the clicked element is a key 
-      if(e.target && e.target.classList.contains('key')) {
-        inputKey = e.target.innerText; // inputKey is set to the text of the clicked key
-        
-        // If the key is numeric (or a decimal point)
-        if(!isNaN(parseInt(inputKey)) || inputKey === ".") {
-          if(getCurrentOutput() === '0'){
-            setCurrentOutput(inputKey);
-          } else {
-            setCurrentOutput(getCurrentOutput() + inputKey);
-          }
-          previousKey = inputKey;
-        }
-        
-        // If the input key is an operator
-        if(operators.includes(inputKey)) {
-          if(!operators.includes(previousKey)) { 
-            // If the previous key is not an operator
-            setCurrentOutput(getCurrentOutput() + inputKey); // treat it as string and add the operator
-          } else {
-            // If the previous key is an operator
-            // .slice(0, -1) will remove the previous operator
-            setCurrentOutput(getCurrentOutput().slice(0, -1) + inputKey); // remove the previous operator and add the new operator
-          }
-          previousKey = inputKey;
-        }
-        
-        // Evaluate expression on "="
-        if(inputKey === '='){
-          try {
-            setCurrentOutput(eval(getCurrentOutput()));
-          } catch(e) {
-            setCurrentOutput("Error");
-          }
-        }
-        
-        // Clear on "AC"
-        if(inputKey === 'AC'){
-          setCurrentOutput('0');
-        }
-        
-        // Toggle sign on "+/-"
-        if(inputKey === '+/-'){
-          setCurrentOutput(-1 * eval(getCurrentOutput()));
-        }
-        
-        // Percentage on "%"
-        if(inputKey === '%'){
-          setCurrentOutput(eval(getCurrentOutput()) / 100);
-        }
-
-    
-
-
-      }
-    });
-  </script>
+  <script src="scripts.js"></script>
 </body>
 </html>

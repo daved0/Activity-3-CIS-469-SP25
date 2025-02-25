@@ -1,0 +1,72 @@
+#calculator {
+    /* Grid Layout is used to position the keys */
+    margin: auto;
+    width: 200px; /* Width of calculator */
+    height: 345px; /* Height of calculator */
+    background-color: #27282A; /* Background color of calculator */
+    border: solid 1px #5e5e5c; /* Border of calculator */
+    font-family: sans-serif; /* Font of calculator -- this is probably different from the actual calculator font */
+    font-size: 14pt; /* Font size of calculator */
+    color: floralwhite; /* Color of calculator text */
+    display: grid; /* Grid Layout is used to position the keys */
+    grid-template-columns: repeat(4, 1fr); /* 4 columns of equal width see the slides for the full explanation */
+    grid-auto-rows: 1fr; /* See slides for details  or mdn web docs  https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows */
+  }
+  /* Style for each key */
+  .key {
+      /* width and height of the keys are 40px */
+      width:37px;  
+      height:37px;
+      /* border of the keys */
+      border: solid #5e5e5c 1px;
+      /* make display of the key flex, so later we can center the text inside the keys */
+      display: flex;
+  
+      /* center the text inside the keys horizontally and vertically */
+      align-items: center;
+      justify-content: center;
+    
+      /* prevent user from highlighting the keys, this way they can't copy the text */
+      user-select: none;
+      /* the pointer is a hand, telling user you can click on the key */
+      cursor: pointer;
+    /* round the corners of the keys to make it round*/
+      border-radius:50px;
+      margin: 3px;
+  }
+.output {
+position: relative; /* Added to position the span element */
+height: 100px;
+
+text-align: right; /* Align text to the right */
+
+grid-column: span 4;
+padding: 10px;
+}
+.output span {
+position: absolute;
+bottom: 10px; /* Adjust to match padding if needed */
+right: 10px;  /* Adjust to match padding if needed */
+}
+  .numberKeys {
+    background-color: #565758;
+  }
+  .topRowKeys {
+    background-color: #6d6d6b;
+  }
+  .operatorKeys {
+    background-color: #fb9c0e;
+  }
+  .numberKeysPressed {
+    background-color: #b6b6b5;
+  }
+  .topRowKeysPressed {
+    background-color: #858483;
+  }
+  .operatorKeysPressed {
+    background-color: #cb7d06;
+  }
+  /* Utility class for keys spanning 2 columns */
+  .span-2 {
+    grid-column: span 2;
+  }
